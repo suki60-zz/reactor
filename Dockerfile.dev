@@ -1,0 +1,17 @@
+FROM node:erbium-alpine
+
+# Setting working directory. All the path will be relative to WORKDIR
+WORKDIR /app
+
+RUN apk add git
+
+# Installing dependencies
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# Copying source files
+COPY . .
+
+# Running the app
+EXPOSE 4000
+ENTRYPOINT [ "npm", "run", "start" ]
